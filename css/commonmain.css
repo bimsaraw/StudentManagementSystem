@@ -1,0 +1,39 @@
+h1, h2, h3, h4, h5, h6, p, a {
+    font-family: Tahoma, Geneva, sans-serif;
+}
+
+body {
+    background-color: #f5f5f5;
+}
+
+.navbar {
+    background-color: #fff;
+    border-bottom: 3px solid #08c;
+}
+
+.boxarea {
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
+    background-color: #FFFFFF;
+    margin-top: 10px;
+    width: 100%;
+    display: block;
+    padding-bottom: 5px;
+    padding-left: 0px;
+}
+
+.container {
+    max-width: 1200px;
+}
+
+.insideholder {
+    background-color: #fff;
+    display: block;
+    padding: 15px;
+    height: 100%;
+    width: 100%;
+}
+
+footer {
+    margin-top: 20px;
+}
