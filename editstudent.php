@@ -6,7 +6,8 @@ require_once('class/upload.class.php');
     $breadcrumb = ""; 
     $responseerror = "";
     $success = "";
-    error_reporting(0);
+//    error_reporting(0);
+    
 if (isset($_POST['submit'])) {
 
        $studentId = $_POST['studentId'];
@@ -23,21 +24,23 @@ if (isset($_POST['submit'])) {
        $education = $_POST['education'];
        $date_added = date("Y-m-d");
 
-       $validateId = "SELECT studentId FROM student WHERE studentId='".$studentId."'";
-       if($conn->query($validateId)->num_rows>0){
-            $responseerror = "Student Id is not unique.";  
-       }
-       else {
-            $insert = "INSERT INTO student (studentId, Name, NIC, Address, City, Country, Email, Telephone, Mobile, Image, Guardian, Guardian_TP, Education, Date_added)
-                VALUES ('$studentId','$name','$nic','$address','$city','$country','$email','$telephone','$mobile','$image','$guardian','$guardian_TP','$education','$date_added')";
+            $insert = "UPDATE student SET Name='$name',NIC='$nic', Address='$address', City='$city', Country='$country',
+                Email='$email', Telephone='$telephone', Mobile='$mobile', Guardian='$guardian', Guardian_TP='$guardian_TP', Education='$education' 
+                    WHERE studentId='".$studentId."'";
             if ($conn->query($insert) === TRUE) {
-                $success = "Student added successfully!";
+                $success = "Student updated successfully!";
             } else {
                 $responseerror = $conn->error;
-            }
-        } 
+            } 
         $conn->close();
       }
+if($_GET["id"]!="" && !isset($_POST['submit'
+    . ''])){
+    $editquery = "SELECT * FROM student WHERE studentId='".$_GET['id']."'";
+    $result = $conn->query($editquery);
+    $result = $result->fetch_assoc();
+    $conn->close();
+}
 ?>
 
 <html lang="en">
@@ -82,38 +85,38 @@ if (isset($_POST['submit'])) {
                                 <div class="form-group">
                                     <label class="control-label col-sm-2" for="studentId">Student ID:</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="studentId" name="studentId" value="<?php echo $_POST['studentId']; ?>" placeholder="Enter an unique student Id" required>
+                                        <input type="text" class="form-control" id="studentId" name="studentId" value="<?php echo $result['studentId']; ?>" placeholder="Enter an unique student Id" disabled>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label col-sm-2" for="name">Name:</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="name" name="name" value="<?php echo $_POST['name']; ?>" placeholder="Enter student name" required>
+                                        <input type="text" class="form-control" id="name" name="name" value="<?php echo $result['Name']; ?>" placeholder="Enter student name" required>
                                     </div>
-                                </div> 
+                                </div>    
                                 <div class="form-group">
                                     <label class="control-label col-sm-2" for="nic">NIC:</label>
                                     <div class="col-sm-10">
                                         <input type="text" class="form-control" id="nic" name="nic" value="<?php echo $result['NIC']; ?>" placeholder="Enter the NIC or passport number" required>
                                     </div>
-                                </div>                                 
+                                </div>                                  
                                 <div class="form-group">
                                     <label class="control-label col-sm-2" for="address">Address:</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="address" name="address" value="<?php echo $_POST['address']; ?>" placeholder="Home number, street name etc." required>
+                                        <input type="text" class="form-control" id="address" name="address" value="<?php echo $result['Address']; ?>" placeholder="Home number, street name etc." required>
                                     </div>
                                 </div> 
                                 <div class="form-group">
                                     <label class="control-label col-sm-2" for="city">City:</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="city" name="city" value="<?php echo $_POST['city']; ?>" placeholder="Enter the name of City" required>
+                                        <input type="text" class="form-control" id="city" name="city" value="<?php echo $result['City']; ?>" placeholder="Enter the name of City" required>
                                     </div>
                                 </div>     
                                 <div class="form-group">
                                     <label class="control-label col-sm-2" for="country">Country:</label>
                                     <div class="col-sm-10">
                                         <select class="form-control" id="country" name="country">
-                                                <option value='<?php echo $_POST['country']; ?>'><?php echo $_POST['country']; ?></option>
+                                                <option value='<?php echo $result['country']; ?>'><?php echo $result['Country']; ?></option>
                                                 <option value="AFG">Afghanistan</option>
                                                 <option value="ALA">Åland Islands</option>
                                                 <option value="ALB">Albania</option>
@@ -369,48 +372,48 @@ if (isset($_POST['submit'])) {
                                 <div class="form-group">
                                     <label class="control-label col-sm-2" for="email">Email:</label>
                                     <div class="col-sm-10">
-                                        <input type="email" class="form-control" id="email" name="email" value="<?php echo $_POST['email']; ?>" placeholder="Enter the email address" required>
+                                        <input type="email" class="form-control" id="email" name="email" value="<?php echo $result['Email']; ?>" placeholder="Enter the email address" required>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label col-sm-2" for="telephone">Telephone:</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="telephone" name="telephone" pattern= "[0-9]{13}" title="Invalid phone number! Please check" value="<?php echo $_POST['telephone']; ?>" placeholder="Enter the telephone number with coutry code" maxlength="14" data-fv-numeric="true" data-fv-numeric-message="Please enter valid phone number" required>
+                                        <input type="text" class="form-control" id="telephone" name="telephone" pattern= "[0-9]{13}" title="Invalid phone number! Please check" value="<?php echo $result['Telephone']; ?>" placeholder="Enter the telephone number with coutry code" maxlength="14" data-fv-numeric="true" data-fv-numeric-message="Please enter valid phone number" required>
                                     </div>
                                 </div>    
                                 <div class="form-group">
                                     <label class="control-label col-sm-2" for="mobile">Mobile:</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="mobile" name="mobile" pattern= "[0-9]{13}" title="Invalid phone number! Please check" value="<?php echo $_POST['mobile']; ?>" placeholder="Enter mobile number with coutry code" required>
+                                        <input type="text" class="form-control" id="mobile" name="mobile" pattern= "[0-9]{13}" title="Invalid phone number! Please check" value="<?php echo $result['Mobile']; ?>" placeholder="Enter mobile number with coutry code" required>
                                     </div>
                                 </div>    
                                 <div class="form-group">
                                     <label class="control-label col-sm-2" for="image">Photo:</label>
                                     <div class="col-sm-10">
-                                        <input type="file" class="form-control" id="image" value="<?php echo $_POST['image']; ?>" name="image">
+                                        <input type="file" class="form-control" id="image" value="<?php echo $result['Image']; ?>" name="image">
                                     </div>
                                 </div>  
                                 <div class="form-group">
                                     <label class="control-label col-sm-2" for="guardian">Guardian:</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="guardian" name="guardian" value="<?php echo $_POST['guardian']; ?>" placeholder="Enter Mother/Father or Guardian's name" required>
+                                        <input type="text" class="form-control" id="guardian" name="guardian" value="<?php echo $result['Guardian']; ?>" placeholder="Enter Mother/Father or Guardian's name" required>
                                     </div>
                                 </div>    
                                 <div class="form-group">
                                     <label class="control-label col-sm-2" for="guardian_TP">Guardian Contact:</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="guardian_TP" name="guardian_TP" pattern= "[0-9]{13}" title="Invalid phone number! Please check" value="<?php echo $_POST['guardian_TP']; ?>" placeholder="Enter Mother/Father or Guardian's contact no." required>
+                                        <input type="text" class="form-control" id="guardian_TP" name="guardian_TP" pattern= "[0-9]{13}" title="Invalid phone number! Please check" value="<?php echo $result['Guardian_TP']; ?>" placeholder="Enter Mother/Father or Guardian's contact no." required>
                                     </div>
                                 </div> 
                                 <div class="form-group">
                                     <label class="control-label col-sm-2" for="education">Education:</label>
                                     <div class="col-sm-10">
-                                        <textarea type="text" class="form-control" style='resize:vertical ;' id="education" value="<?php echo $_POST['education']; ?>" required></textarea>
+                                        <textarea type="text" class="form-control" style='resize:vertical ;' id="education" name="education" value="<?php echo $result['Education']; ?>" required><?php echo $result['Education']; ?></textarea>
                                     </div>
                                 </div>  
                                 <div class="form-group"> 
                                     <div class="col-sm-offset-2 col-sm-10">
-                                        <button type="submit" name="submit" class="btn btn-success">Add Student</button>
+                                        <button type="submit" name="submit" class="btn btn-success">Update</button>
                                         <button type="reset" class="btn btn-danger">Discard</button>
                                     </div>
                                 </div>                                

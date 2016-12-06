@@ -15,8 +15,7 @@
                 <span class="caret"></span></a>
                     <ul class="dropdown-menu">
                         <li><a href="addstudent.php">Add</a></li>
-                        <li><a href="editstudent.php">Edit</a></li>
-                        <li><a href="removestudent.php">Remove</a></li>
+                        <li><a href="viewstudent.php">View</a></li>                       
                         <li><a href="#">Create Batch</a></li>
                         <li><a href="#">Export to SaegisOnline</a></li>
                     </ul>
