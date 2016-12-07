@@ -28,11 +28,29 @@
                         <div class="insideholder">
                             <form class="form-horizontal" method="post" action="">
                                 <div class="form-group">
-                                    <label class="control-label col-sm-2" for="studentId">Student ID:</label>
+                                    <label class="control-label col-sm-2" for="CourseId">Course ID:</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="studentId" name="studentId" value="<?php echo $result['studentId']; ?>" placeholder="Enter an unique student Id" disabled>
+                                        <input type="text" class="form-control" id="courseId" name="CourseId" value="<?php echo $result['CourseId']; ?>" placeholder="Enter an unique course Id" required>
                                     </div>
                                 </div>
+                                <div class="form-group">
+                                    <label class="control-label col-sm-2" for="Name">Course Name:</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="Name" name="Name" value="<?php echo $result['Name']; ?>" placeholder="Enter the course name" required>
+                                    </div>
+                                </div>   
+                                <div class="form-group">
+                                    <label class="control-label col-sm-2" for="Duration">Duration:</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="Duration" name="Duration" value="<?php echo $result['Duration']; ?>" placeholder="Enter the course duration as months" required>
+                                    </div>
+                                </div>    
+                                <div class="form-group">
+                                    <label class="control-label col-sm-2" for="Duration">Duration:</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="Duration" name="Duration" value="<?php echo $result['Duration']; ?>" placeholder="Enter the course duration as months" required>
+                                    </div>
+                                </div>                                   
                             </form>
                         </div>
                     </div>
