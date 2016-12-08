@@ -28,14 +28,13 @@ if (isset($_POST['submit'])) {
                 Email='$email', Telephone='$telephone', Mobile='$mobile', Guardian='$guardian', Guardian_TP='$guardian_TP', Education='$education' 
                     WHERE studentId='".$studentId."'";
             if ($conn->query($insert) === TRUE) {
-                $success = "Student updated successfully!";
+                Header('Location:viewstudent.php?msg=success');
             } else {
-                $responseerror = $conn->error;
+                Header('Location:viewstudent.php?msg=error');
             } 
         $conn->close();
       }
-if($_GET["id"]!="" && !isset($_POST['submit'
-    . ''])){
+if($_GET["id"]!="" && !isset($_POST['submit'])){
     $editquery = "SELECT * FROM student WHERE studentId='".$_GET['id']."'";
     $result = $conn->query($editquery);
     $result = $result->fetch_assoc();

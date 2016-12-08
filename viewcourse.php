@@ -3,7 +3,7 @@
 $breadcrumb = "";
 error_reporting(0);
 require_once('class/dataAccess.php');
-$sql = "SELECT studentId,Name,Mobile,Guardian,Guardian_TP FROM student ORDER BY Date_added ASC";
+$sql = "SELECT CourseId,Name,Duration,Type FROM Course ORDER BY CourseId ASC";
 $result = $conn->query($sql);
 
 $msg = $_GET['msg'];
@@ -48,11 +48,10 @@ $conn->close();
                                 <table id="student" class="table table-hover" >
                                     <thead>
                                         <tr>
-                                            <th>Student ID</th>
-                                            <th>Name</th>
-                                            <th>Mobile</th>
-                                            <th>Guardian</th>
-                                            <th>Guardian Contact</th>
+                                            <th>Course ID</th>
+                                            <th>Course Name</th>
+                                            <th>Duration</th>
+                                            <th>Type</th>
                                             <th></th>
                                         </tr>
                                     </thead>
@@ -60,14 +59,13 @@ $conn->close();
                                        <?php if ($result->num_rows > 0){ 
                                            while($row = $result->fetch_assoc()) { ?>
                                             <tr>
-                                                <td><?php echo $row['studentId']; ?></td>
+                                                <td><?php echo $row['CourseId']; ?></td>
                                                 <td><?php echo $row['Name']; ?></td>
-                                                <td><?php echo $row['Mobile']; ?></td>
-                                                <td><?php echo $row['Guardian']; ?></td>
-                                                <td><?php echo $row['Guardian_TP']; ?></td>
+                                                <td><?php echo $row['Duration']; ?></td>
+                                                <td><?php echo $row['Type']; ?></td>
                                                 <td>
-                                                    <a href="addstudent.php?id=<?php echo $row['studentId']; ?>" class="btn btn-info btn-sm">Edit</a>
-                                                    <a href="deletestudent.php?id=<?php echo $row['studentId']; ?>" class="btn btn-danger btn-sm">Delete</a>
+                                                    <a href="editcourse.php?id=<?php echo $row['CourseId']; ?>" class="btn btn-info btn-sm">Edit</a>
+                                                    <a href="deletecourse.php?id=<?php echo $row['CourseId']; ?>" class="btn btn-danger btn-sm">Delete</a>
                                                 </td>
                                             </tr>
                                        <?php } } else { ?>
