@@ -45,7 +45,7 @@ $conn->close();
                             <div class="alert alert-danger">Student cannot be updated/deleted!</div>
                             <?php } ?>
                             <div class="table-responsive">
-                                <table id="student" class="table table-hover" >
+                                <table id="course" class="table table-hover" >
                                     <thead>
                                         <tr>
                                             <th>Course ID</th>
@@ -70,7 +70,7 @@ $conn->close();
                                             </tr>
                                        <?php } } else { ?>
                                             <tr>
-                                                <td colspan="6">No Students in the system</td>
+                                                <td colspan="6">No courses in the system. <a href="addcourse.php">Click here</a> to add now.</td>
                                             </tr>
                                        <?php } ?>
                                     </tbody>
@@ -94,7 +94,7 @@ $conn->close();
     <script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.12/js/dataTables.bootstrap.min.js"></script>
     <script>$(document).ready(function() {
-    $('#student').DataTable();
+    $('#course').DataTable();
 } );</script>
     </body>
 </html>

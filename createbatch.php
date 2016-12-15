@@ -8,21 +8,18 @@ $success = "";
 error_reporting(0);
 
 if (isset($_POST['submit'])) {
-    $CourseId = $_POST['CourseId'];
-    $Name = $_POST['Name'];
-    $Duration = $_POST['Duration'];
-    $CourseType = $_POST['CourseType'];
-    $Type = $_POST['Type'];
+    $batchId = $_POST['batchId'];
+    $name = $_POST['name'];
     
-    $validateId = "SELECT CourseId FROM course WHERE CourseId='".$CourseId."'";
+    $validateId = "SELECT batchId FROM batch WHERE CourseId='".$batchId."'";
    if($conn->query($validateId)->num_rows>0){
         $responseerror = "Course Id is not unique.";  
    }
    else {
-        $insert = "INSERT INTO Course (CourseId, Name, Duration, CourseType, Type)
-            VALUES ('$CourseId','$Name','$Duration','$CourseType','$Type')";
+        $insert = "INSERT INTO batch (batchId, name)
+            VALUES ('$batchId','$name')";
         if ($conn->query($insert) === TRUE) {
-            $success = "Course added successfully!";
+            $success = "Batch added successfully!";
         } else {
             $responseerror = $conn->error;
         }
@@ -58,7 +55,7 @@ if (isset($_POST['submit'])) {
                 <div class="col-xs-12 col-md-9">
                     <div class="boxarea">
                         <div class="insideholder">
-                            <h2>Add Course</h2>
+                            <h2>Create Batch</h2>
                             <hr>
                             <?php if ($responseerror != "") { ?>
                             <div class="alert alert-warning alert-dismissible fade in">
@@ -72,47 +69,20 @@ if (isset($_POST['submit'])) {
                             <?php } ?>  
                             <form class="form-horizontal" method="post" action="">
                                 <div class="form-group">
-                                    <label class="control-label col-sm-2" for="CourseId">Course ID:</label>
+                                    <label class="control-label col-sm-2" for="batchId">Course ID:</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="courseId" name="CourseId" value="<?php echo $_POST['CourseId']; ?>" placeholder="Enter an unique course Id" required>
+                                        <input type="text" class="form-control" id="batchId" name="batchId" value="<?php echo $_POST['batchId']; ?>" placeholder="Enter an unique course Id" required>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label col-sm-2" for="Name">Course Name:</label>
+                                    <label class="control-label col-sm-2" for="name">Batch Name:</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="Name" name="Name" value="<?php echo $_POST['Name']; ?>" placeholder="Enter the course name" required>
+                                        <input type="text" class="form-control" id="name" name="name" value="<?php echo $_POST['name']; ?>" placeholder="Enter the course name" required>
                                     </div>
                                 </div>   
-                                <div class="form-group">
-                                    <label class="control-label col-sm-2" for="Duration">Duration:</label>
-                                    <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="Duration" name="Duration" value="<?php echo $_POST['Duration']; ?>" placeholder="Enter the course duration as months" required>
-                                    </div>
-                                </div>    
-                                <div class="form-group">
-                                    <label class="control-label col-sm-2" for="CourseType">Course Type:</label>
-                                    <div class="col-sm-10">
-                                        <select class="form-control" id="CourseType" name="CourseType">
-                                            <option value="<?php echo $_POST['CourseType']; ?>"><?php echo $_POST['CourseType']; ?></option>
-                                            <option value="Certificate">Certificate</option>
-                                            <option value="Diploma">Diploma</option>
-                                            <option value="Degree">Degree</option>
-                                        </select>
-                                    </div>
-                                </div>  
-                                <div class="form-group">
-                                    <label class="control-label col-sm-2" for="Type">Type:</label>
-                                    <div class="col-sm-10">
-                                        <select class="form-control" id="Type" name="Type">
-                                            <option value="<?php echo $_POST['Type']; ?>"><?php echo $_POST['Type']; ?></option>
-                                            <option value="Part Time">Part Time</option>
-                                            <option value="Full Time">Full Time</option>
-                                        </select>
-                                    </div>
-                                </div>  
                                 <div class="form-group"> 
                                     <div class="col-sm-offset-2 col-sm-10">
-                                        <button type="submit" name="submit" class="btn btn-success">Add Course</button>
+                                        <button type="submit" name="submit" class="btn btn-success">Create Batch</button>
                                         <button type="reset" class="btn btn-danger">Discard</button>
                                     </div>
                                 </div>                                 

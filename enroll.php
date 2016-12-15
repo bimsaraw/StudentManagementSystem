@@ -9,9 +9,13 @@ $result = $conn->query($courselist);
 $select = "";
 
 if(isset($_POST['select'])){
-    $selectquery = "SELECT studentId, Name FROM student";
-    $select = $conn->query($selectquery);
+    $selectbatchquery = "SELECT batchId, name FROM batch";
+    $selectbatch = $conn->query($selectbatchquery);
     $conn->close();
+}
+
+if(isset($_POST['enroll'])){
+    
 }
         
 ?>
@@ -61,14 +65,17 @@ if(isset($_POST['select'])){
                             <br>
 
                             <?php if(isset($_POST['select'])) { ?>
-                                <form method="post" action="">
-                                    <label class="control-label" for="selectStudent">Select students</label>                                   
-                                        <select multiple name="selectStudent" class="form-control">
-                                           <?php if ($select->num_rows > 0){ 
-                                               while($row = $select->fetch_assoc()) { ?>
-                                               <option value="<?php echo $row['studentId']; ?>"><?php echo $row['Name']; ?></option>
+                                <form method="post" action="">\
+                                    <div class="form-group">
+                                        <label class="control-label" for="selectBatch">Select batch</label>                                   
+                                        <select multiple name="selectBatch" class="form-control">
+                                           <?php if ($selectbatch->num_rows > 0){ 
+                                               while($row = $selectbatch->fetch_assoc()) { ?>
+                                               <option value="<?php echo $row['batchId']; ?>"><?php echo $row['name']; ?></option>
                                            <?php } } ?>
                                         </select>
+                                    </div>
+                                    <button type="submit" class="btn btn-success" name="enroll">Enroll Batch</button>
                                 </form>                               
                             <?php } ?>
                         </div>

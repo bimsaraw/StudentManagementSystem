@@ -3,7 +3,7 @@
 $breadcrumb = "";
 error_reporting(0);
 require_once('class/dataAccess.php');
-$sql = "SELECT studentId,Name,Mobile,Guardian,Guardian_TP FROM student ORDER BY Date_added ASC";
+$sql = "SELECT * FROM batch ORDER BY batchId ASC";
 $result = $conn->query($sql);
 
 $msg = $_GET['msg'];
@@ -40,19 +40,16 @@ $conn->close();
                             <h2>View Students</h2>
                             <hr>
                             <?php if($msg == "success"){ ?>
-                            <div class="alert alert-success">Student updated/deleted successfully!</div>
+                            <div class="alert alert-success">Batch updated/deleted successfully!</div>
                             <?php } else if($msg =="error") { ?>
-                            <div class="alert alert-danger">Student cannot be updated/deleted!</div>
+                            <div class="alert alert-danger">Batch cannot be updated/deleted!</div>
                             <?php } ?>
                             <div class="table-responsive">
-                                <table id="student" class="table table-hover" >
+                                <table id="course" class="table table-hover" >
                                     <thead>
                                         <tr>
-                                            <th>Student ID</th>
-                                            <th>Name</th>
-                                            <th>Mobile</th>
-                                            <th>Guardian</th>
-                                            <th>Guardian Contact</th>
+                                            <th>Batch ID</th>
+                                            <th>Batch Name</th>
                                             <th></th>
                                         </tr>
                                     </thead>
@@ -60,19 +57,16 @@ $conn->close();
                                        <?php if ($result->num_rows > 0){ 
                                            while($row = $result->fetch_assoc()) { ?>
                                             <tr>
-                                                <td><?php echo $row['studentId']; ?></td>
-                                                <td><?php echo $row['Name']; ?></td>
-                                                <td><?php echo $row['Mobile']; ?></td>
-                                                <td><?php echo $row['Guardian']; ?></td>
-                                                <td><?php echo $row['Guardian_TP']; ?></td>
+                                                <td><?php echo $row['batchId']; ?></td>
+                                                <td><?php echo $row['name']; ?></td>
                                                 <td>
-                                                    <a href="addstudent.php?id=<?php echo $row['studentId']; ?>" class="btn btn-info btn-sm">Edit</a>
-                                                    <a href="deletestudent.php?id=<?php echo $row['studentId']; ?>" class="btn btn-danger btn-sm">Delete</a>
+                                                    <a href="editbatch.php?id=<?php echo $row['batchId']; ?>" class="btn btn-info btn-sm">Edit</a>
+                                                    <a href="deletebatch.php?id=<?php echo $row['batchId']; ?>" class="btn btn-danger btn-sm">Delete</a>
                                                 </td>
                                             </tr>
                                        <?php } } else { ?>
                                             <tr>
-                                                <td colspan="6">No Students in the system. <a href="addstudent.php">Click here</a> to add now.</td>
+                                                <td colspan="6">No batches in the system. <a href="createbatch.php">Click here</a> to add now.</td>
                                             </tr>
                                        <?php } ?>
                                     </tbody>
@@ -96,7 +90,7 @@ $conn->close();
     <script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.12/js/dataTables.bootstrap.min.js"></script>
     <script>$(document).ready(function() {
-    $('#student').DataTable();
+    $('#course').DataTable();
 } );</script>
     </body>
 </html>
