@@ -19,9 +19,10 @@ if (isset($_POST['submit'])) {
         $responseerror = "Course Id is not unique.";  
    }
    else {
-        $insert = "INSERT INTO Course (CourseId, Name, Duration, CourseType, Type)
+        $insert = "INSERT INTO Course (CourseId, courseName, Duration, CourseType, Type)
             VALUES ('$CourseId','$Name','$Duration','$CourseType','$Type')";
         if ($conn->query($insert) === TRUE) {
+			$_POST=array();
             $success = "Course added successfully!";
         } else {
             $responseerror = $conn->error;

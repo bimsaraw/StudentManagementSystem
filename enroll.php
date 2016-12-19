@@ -9,8 +9,8 @@ $result = $conn->query($courselist);
 $select = "";
 
 if(isset($_POST['select'])){
-    $selectbatchquery = "SELECT batchId, name FROM batch";
-    $selectbatch = $conn->query($selectbatchquery);
+    $selectstudentquery = "SELECT studentId, name FROM student";
+    $selectstudent = $conn->query($selectstudentquery);
     $conn->close();
 }
 
@@ -70,8 +70,8 @@ if(isset($_POST['enroll'])){
                                         <label class="control-label" for="selectBatch">Select batch</label>                                   
                                         <select multiple name="selectBatch" class="form-control">
                                            <?php if ($selectbatch->num_rows > 0){ 
-                                               while($row = $selectbatch->fetch_assoc()) { ?>
-                                               <option value="<?php echo $row['batchId']; ?>"><?php echo $row['name']; ?></option>
+                                               while($row = $selectstudent->fetch_assoc()) { ?>
+                                               <option value="<?php echo $row['studentId']; ?>"><?php echo $row['Name']; ?></option>
                                            <?php } } ?>
                                         </select>
                                     </div>

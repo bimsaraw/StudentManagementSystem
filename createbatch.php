@@ -10,21 +10,33 @@ error_reporting(0);
 if (isset($_POST['submit'])) {
     $batchId = $_POST['batchId'];
     $name = $_POST['name'];
+	$type = $_POST['type'];
+	$course = $_POST['course'];
+	
+		$validatetype=$conn->query("SELECT CourseId, Type FROM course WHERE CourseId='".$course."'");
+		$validatetype=$validatetype->fetch_assoc();
+		
+		
     
     $validateId = "SELECT batchId FROM batch WHERE CourseId='".$batchId."'";
+	$validatetype=$conn->query("SELECT CourseId, Type FROM course WHERE CourseId='".$course."'");
+	$validatetype=$validatetype->fetch_assoc();
+	
    if($conn->query($validateId)->num_rows>0){
         $responseerror = "Course Id is not unique.";  
    }
-   else {
-        $insert = "INSERT INTO batch (batchId, name)
-            VALUES ('$batchId','$name')";
+   else if($validatetype['Type']==$type) {
+        $insert = "INSERT INTO batch (batchId, name, type, CourseId)
+            VALUES ('$batchId','$name', '$type', '$course')";
         if ($conn->query($insert) === TRUE) {
+			$_POST = array();
             $success = "Batch added successfully!";
         } else {
             $responseerror = $conn->error;
         }
-    } 
-    $conn->close();   
+    } else {
+		$responseerror = "There is a mismatch between the time shedules(Type) of Course and the Batch";
+	}    
 }
 
 
@@ -69,17 +81,41 @@ if (isset($_POST['submit'])) {
                             <?php } ?>  
                             <form class="form-horizontal" method="post" action="">
                                 <div class="form-group">
-                                    <label class="control-label col-sm-2" for="batchId">Course ID:</label>
+                                    <label class="control-label col-sm-2" for="batchId">Batch ID:</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="batchId" name="batchId" value="<?php echo $_POST['batchId']; ?>" placeholder="Enter an unique course Id" required>
+                                        <input type="text" class="form-control" id="batchId" name="batchId" value="<?php echo $_POST['batchId']; ?>" placeholder="Enter an unique batch Id" required>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label col-sm-2" for="name">Batch Name:</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="name" name="name" value="<?php echo $_POST['name']; ?>" placeholder="Enter the course name" required>
+                                        <input type="text" class="form-control" id="name" name="name" value="<?php echo $_POST['name']; ?>" placeholder="Enter the batch name" required>
                                     </div>
                                 </div>   
+                                <div class="form-group">
+                                    <label class="control-label col-sm-2" for="type">Type:</label>
+                                    <div class="col-sm-10">
+                                        <select class="form-control" name="type" required>
+											<option value="<?php echo $_POST['type']; ?>"><?php echo $_POST['type']; ?></option>
+											<option value="Full Time">Full Time</option>
+											<option value="Part Time">Part Time</option>
+										</select>
+                                    </div>
+                                </div> 	
+                                <div class="form-group">
+									<?php $coursequery = "SELECT CourseId, courseName FROM course";
+									    $resultc = $conn->query($coursequery);
+										 ?>
+                                    <label class="control-label col-sm-2" for="course">Course:</label>
+                                    <div class="col-sm-10">
+                                        <select class="form-control" name="course" required>
+												<option value="<?php echo $_POST['course']; ?>"><?php echo $_POST['course']; ?></option>
+											<?php while($row = $resultc->fetch_assoc()) { ?>
+												<option value="<?php echo $row['CourseId']; ?>"><?php echo $row['courseName']; ?></option>
+											<?php } ?>
+										</select>
+                                    </div>
+                                </div> 								
                                 <div class="form-group"> 
                                     <div class="col-sm-offset-2 col-sm-10">
                                         <button type="submit" name="submit" class="btn btn-success">Create Batch</button>

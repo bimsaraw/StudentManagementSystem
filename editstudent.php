@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 
-<?php 
+<?php
+error_reporting(0); 
 require_once('class/dataAccess.php');
 require_once('class/upload.class.php');
     $breadcrumb = ""; 
     $responseerror = "";
     $success = "";
-//    error_reporting(0);
-    
-if (isset($_POST['submit'])) {
 
-       $studentId = $_POST['studentId'];
+if(isset($_GET['id'])) {
+	$studentId = $_GET['id'];    
+	if (isset($_POST['submit'])) {
        $name = $_POST['name'];
        $nic = $_POST['nic'];
        $address = $_POST['address'];
@@ -33,8 +33,9 @@ if (isset($_POST['submit'])) {
                 Header('Location:viewstudent.php?msg=error');
             } 
         $conn->close();
-      }
-if($_GET["id"]!="" && !isset($_POST['submit'])){
+    }
+}
+if(isset($_GET["id"]) && !isset($_POST['submit'])){
     $editquery = "SELECT * FROM student WHERE studentId='".$_GET['id']."'";
     $result = $conn->query($editquery);
     $result = $result->fetch_assoc();
@@ -412,7 +413,7 @@ if($_GET["id"]!="" && !isset($_POST['submit'])){
                                 </div>  
                                 <div class="form-group"> 
                                     <div class="col-sm-offset-2 col-sm-10">
-                                        <button type="submit" name="submit" class="btn btn-success">Update</button>
+                                        <button type="submit" name="submit" class="btn btn-success">Update Student</button>
                                         <button type="reset" class="btn btn-danger">Discard</button>
                                     </div>
                                 </div>                                

@@ -6,25 +6,26 @@ require_once('class/upload.class.php');
 $responseerror = "";
 $success = "";
 
+if(isset($_GET['id'])) {
+	$CourseId = $_GET['id']; 
+	if (isset($_POST['submit'])) {
+		$Name = $_POST['Name'];
+		$Duration = $_POST['Duration'];
+		$CourseType = $_POST['CourseType'];
+		$Type = $_POST['Type'];
+		
+			$update = "UPDATE Course SET courseName='$Name', Duration='$Duration', CourseType='$CourseType', Type='$Type'
+				WHERE CourseId='".$CourseId."'";
+				if ($conn->query($update) === TRUE) {
+					Header('Location:viewcourse.php?msg=success');
+				} else {
+					echo $conn->error; 
+				} 
 
-if (isset($_POST['submit'])) {
-    $CourseId = $_POST['CourseId'];
-    $Name = $_POST['Name'];
-    $Duration = $_POST['Duration'];
-    $CourseType = $_POST['CourseType'];
-    $Type = $_POST['Type'];
-    
-        $update = "UPDATE Course SET Name='$Name', Duration='$Duration', CourseType='$CourseType', Type='$Type'
-            WHERE CourseId='".$CourseId."'";
-            if ($conn->query($update) === TRUE) {
-                Header('Location:viewcourse.php?msg=success');
-            } else {
-                echo $conn->error; 
-            } 
-
-    $conn->close();   
+		$conn->close();   
+	}
 }
-if($_GET["id"]!="" && !isset($_POST['submit'])){
+if(isset($_GET["id"]) && !isset($_POST['submit'])){
     $editquery = "SELECT * FROM Course WHERE CourseId='".$_GET['id']."'";
     $result = $conn->query($editquery);
     $result = $result->fetch_assoc();
@@ -71,7 +72,7 @@ if($_GET["id"]!="" && !isset($_POST['submit'])){
                                 <div class="form-group">
                                     <label class="control-label col-sm-2" for="Name">Course Name:</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="Name" name="Name" value="<?php echo $result['Name']; ?>" placeholder="Enter the course name" required>
+                                        <input type="text" class="form-control" id="Name" name="Name" value="<?php echo $result['courseName']; ?>" placeholder="Enter the course name" required>
                                     </div>
                                 </div>   
                                 <div class="form-group">
@@ -103,7 +104,7 @@ if($_GET["id"]!="" && !isset($_POST['submit'])){
                                 </div>  
                                 <div class="form-group"> 
                                     <div class="col-sm-offset-2 col-sm-10">
-                                        <button type="submit" name="submit" class="btn btn-success">Add Course</button>
+                                        <button type="submit" name="submit" class="btn btn-success">Update Course</button>
                                         <button type="reset" class="btn btn-danger">Discard</button>
                                     </div>
                                 </div>                                 
