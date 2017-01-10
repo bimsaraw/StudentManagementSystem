@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <?php 
-error_reporting[0];
+error_reporting(0);
 $breadcrumb = ""; 
 require_once('class/dataAccess.php');
 require_once('class/upload.class.php');        

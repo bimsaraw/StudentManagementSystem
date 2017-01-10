@@ -25,7 +25,7 @@
 
                 <div class="col-xs-12 col-md-9">
                     <div class="boxarea">
-                        <div class="insideholder">
+                        <div id="click" class="insideholder">
                             test
                         </div>
                     </div>

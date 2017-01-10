@@ -3,7 +3,7 @@
 $breadcrumb = "";
 error_reporting(0);
 require_once('class/dataAccess.php');
-$sql = "SELECT * FROM batch ORDER BY batchId ASC";
+$sql = "SELECT batch.batchId,batch.name,course.courseName FROM `batch` INNER JOIN course ON batch.CourseId = course.CourseId ORDER BY batchId ASC";
 $result = $conn->query($sql);
 
 $msg = $_GET['msg'];
@@ -50,6 +50,7 @@ $conn->close();
                                         <tr>
                                             <th>Batch ID</th>
                                             <th>Batch Name</th>
+                                            <th>Course Assigned</th>
                                             <th></th>
                                         </tr>
                                     </thead>
@@ -59,6 +60,7 @@ $conn->close();
                                             <tr>
                                                 <td><?php echo $row['batchId']; ?></td>
                                                 <td><?php echo $row['name']; ?></td>
+                                                <td><?php echo $row['courseName']; ?></td>
                                                 <td>
                                                     <a href="editbatch.php?id=<?php echo $row['batchId']; ?>" class="btn btn-info btn-sm">Edit</a>
                                                     <a href="deletebatch.php?id=<?php echo $row['batchId']; ?>" class="btn btn-danger btn-sm">Delete</a>

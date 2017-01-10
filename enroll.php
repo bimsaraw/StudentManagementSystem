@@ -3,19 +3,25 @@
 require_once('class/dataAccess.php');
 require_once('class/upload.class.php');   
 
-$courselist = "SELECT CourseId, Name FROM course";
+$courselist = "SELECT batchId, name FROM batch";
 $result = $conn->query($courselist);
 
-$select = "";
 
-if(isset($_POST['select'])){
-    $selectstudentquery = "SELECT studentId, name FROM student";
+    $selectstudentquery = "SELECT studentId, Name FROM student";
     $selectstudent = $conn->query($selectstudentquery);
-    $conn->close();
-}
 
-if(isset($_POST['enroll'])){
-    
+
+if(isset($_POST['enroll'])){    
+    $select = $_POST['selectBatch'];
+    foreach($_POST['selectStudents'] as $students){
+        $enrollquery = "INSERT INTO enroll('studentId','batchId','structId','date') 
+            VALUES('$students','$select','nullfornow','".date()."')";
+        if ($conn->query($enrollquery) === TRUE) {
+            echo "added";
+        } else {
+            echo $conn->error;
+        }        
+    }
 }
         
 ?>
@@ -47,37 +53,32 @@ if(isset($_POST['enroll'])){
                         <div class="insideholder">
                             <h2>Enroll Students</h2>
                             <hr> 
-                            <form class="form-inline" method="post" action="">
-                                <div class="form-group">
-                                    <label class="control-label" for="selectCourse">Select the course to enroll:</label>
-                                        <select class="form-control" name="selectCourse">
+                            <br>
+
+                                <form method="post" action="">
+                                    <div class="form-group">
+                                    <label class="control-label" for="selectBatch">Select the course to enroll:</label>
+                                        <select class="form-control" name="selectBatch">
                                             <?php if(isset($_POST['select'])) { ?>
-                                            <option value="<?php echo $_POST['selectCourse']; ?>"><?php echo $_POST['selectCourse']; ?></option>
+                                            <option value="<?php echo $_POST['selectBatch']; ?>"><?php echo $_POST['selectBatch']; ?></option>
                                             <?php } else { ?>
                                            <?php if ($result->num_rows > 0){ 
                                                while($row = $result->fetch_assoc()) { ?>
-                                            <option value="<?php echo $row['CourseId']; ?>"><?php echo $row['Name']; ?></option>
+                                            <option value="<?php echo $row['batchId']; ?>"><?php echo $row['name']; ?></option>
                                             <?php } } }?>
                                         </select>
-                                </div>
-                                <button type="submit" class="btn btn-info" name="select">Select</button>
-                            </form>
-                            <br>
-
-                            <?php if(isset($_POST['select'])) { ?>
-                                <form method="post" action="">\
+                                    </div>                                    
                                     <div class="form-group">
-                                        <label class="control-label" for="selectBatch">Select batch</label>                                   
-                                        <select multiple name="selectBatch" class="form-control">
-                                           <?php if ($selectbatch->num_rows > 0){ 
+                                        <label class="control-label" for="selectStudents">Select Students</label>                                   
+                                        <select multiple name="selectStudents" class="form-control">
+                                           <?php if ($selectstudent->num_rows > 0){ 
                                                while($row = $selectstudent->fetch_assoc()) { ?>
                                                <option value="<?php echo $row['studentId']; ?>"><?php echo $row['Name']; ?></option>
                                            <?php } } ?>
                                         </select>
                                     </div>
-                                    <button type="submit" class="btn btn-success" name="enroll">Enroll Batch</button>
+                                    <button type="submit" class="btn btn-success" name="enroll">Enroll Students</button>
                                 </form>                               
-                            <?php } ?>
                         </div>
                     </div>
                 </div> 
