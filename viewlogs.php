@@ -1,12 +1,10 @@
 <!DOCTYPE html>
 <?php 
-$breadcrumb = "";
+$breadcrumb = "logs";
 error_reporting(0);
 require_once('class/dataAccess.php');
-$sql = "SELECT CourseId,Name,Duration,Type FROM Course ORDER BY CourseId ASC";
+$sql = "SELECT * FROM tbllogs ORDER BY log_id DESC";
 $result = $conn->query($sql);
-
-$msg = $_GET['msg'];
 
 $conn->close();
 ?>
@@ -37,40 +35,30 @@ $conn->close();
                 <div class="col-xs-12 col-md-9">
                     <div class="boxarea">
                         <div class="insideholder">
-                            <h2>View Courses</h2>
+                            <h2>View Logs</h2>
                             <hr>
-                            <?php if($msg == "success"){ ?>
-                            <div class="alert alert-success">Course updated/deleted successfully!</div>
-                            <?php } else if($msg =="error") { ?>
-                            <div class="alert alert-danger">Course cannot be updated/deleted!</div>
-                            <?php } ?>
                             <div class="table-responsive">
-                                <table id="course" class="table table-hover" >
+                                <table id="logs" class="table table-hover" >
                                     <thead>
                                         <tr>
-                                            <th>Course ID</th>
-                                            <th>Course Name</th>
-                                            <th>Duration</th>
-                                            <th>Type</th>
-                                            <th></th>
+                                            <th>Log ID</th>
+                                            <th>User</th>
+                                            <th>Activity</th>
+                                            <th>Date and Time</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                        <?php if ($result->num_rows > 0){ 
                                            while($row = $result->fetch_assoc()) { ?>
                                             <tr>
-                                                <td><?php echo $row['CourseId']; ?></td>
-                                                <td><?php echo $row['Name']; ?></td>
-                                                <td><?php echo $row['Duration']; ?></td>
-                                                <td><?php echo $row['Type']; ?></td>
-                                                <td>
-                                                    <a href="editcourse.php?id=<?php echo $row['CourseId']; ?>" class="btn btn-info btn-sm">Edit</a>
-                                                    <a href="deletecourse.php?id=<?php echo $row['CourseId']; ?>" class="btn btn-danger btn-sm">Delete</a>
-                                                </td>
+                                                <td><?php echo $row['log_id']; ?></td>
+                                                <td><?php echo $row['userId']; ?></td>
+                                                <td><?php echo $row['activity']; ?></td>
+                                                <td><?php echo $row['time']; ?></td>
                                             </tr>
                                        <?php } } else { ?>
                                             <tr>
-                                                <td colspan="6">No courses in the system. <a href="addcourse.php">Click here</a> to add now.</td>
+                                                <td colspan="6">No logs in the system.</td>
                                             </tr>
                                        <?php } ?>
                                     </tbody>
@@ -94,7 +82,7 @@ $conn->close();
     <script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.12/js/dataTables.bootstrap.min.js"></script>
     <script>$(document).ready(function() {
-    $('#course').DataTable();
+    $('#logs').DataTable();
 } );</script>
     </body>
 </html>

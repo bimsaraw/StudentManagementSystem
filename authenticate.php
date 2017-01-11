@@ -11,6 +11,7 @@ $result = $conn->query($query);
 if($result->num_rows == 1){
     $_SESSION['login_user'] = $userId;
     $_SESSION['LAST_ACTIVITY'] = time();
+    $conn->query("INSERT INTO tbllogs(userId, activity, time) VALUES ('$userId','Logged In','".date("Y-m-d h:i:sa")."')");
     header('Location: index.php');
 }
  else {

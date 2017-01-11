@@ -31,6 +31,8 @@ if (isset($_POST['submit'])) {
         if ($conn->query($insert) === TRUE) {
 			$_POST = array();
             $success = "Batch added successfully!";
+            include ('session.php');
+            $conn->query("INSERT INTO tbllogs(userId, activity, time) VALUES ('$user_check','Student Batch Added $batchId','".date("Y-m-d h:i:sa")."')");
         } else {
             $responseerror = $conn->error;
         }

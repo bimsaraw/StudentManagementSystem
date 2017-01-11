@@ -28,6 +28,8 @@ if(isset($_GET['id'])) {
                 Email='$email', Telephone='$telephone', Mobile='$mobile', Guardian='$guardian', Guardian_TP='$guardian_TP', Education='$education' 
                     WHERE studentId='".$studentId."'";
             if ($conn->query($insert) === TRUE) {
+                include ('session.php');
+                $conn->query("INSERT INTO tbllogs(userId, activity, time) VALUES ('$user_check','Student Edited $studentId','".date("Y-m-d h:i:sa")."')");                
                 Header('Location:viewstudent.php?msg=success');
             } else {
                 Header('Location:viewstudent.php?msg=error');

@@ -78,7 +78,7 @@ if(isset($_POST['enroll'])){
                                         </select>
                                     </div>
                                     <button type="submit" class="btn btn-success" name="enroll">Enroll Students</button>
-                                </form>                               
+                                </form>                                 
                         </div>
                     </div>
                 </div> 

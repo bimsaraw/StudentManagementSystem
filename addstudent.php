@@ -32,7 +32,8 @@ if (isset($_POST['submit'])) {
                 VALUES ('$studentId','$name','$nic','$address','$city','$country','$email','$telephone','$mobile','$image','$guardian','$guardian_TP','$education','$date_added')";
             if ($conn->query($insert) === TRUE) {
                 $success = "Student added successfully!";
-                $conn->query("INSERT INTO tblLogs (userId, activity, time) VALUES ('$userId','Student Added $studentId','".date("Y-m-d h:i:sa")."'");
+                include ('session.php');
+                $conn->query("INSERT INTO tbllogs(userId, activity, time) VALUES ('$user_check','Student Added $studentId','".date("Y-m-d h:i:sa")."')");
             } else {
                 $responseerror = $conn->error;
             }

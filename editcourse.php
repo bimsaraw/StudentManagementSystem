@@ -17,9 +17,11 @@ if(isset($_GET['id'])) {
 			$update = "UPDATE Course SET courseName='$Name', Duration='$Duration', CourseType='$CourseType', Type='$Type'
 				WHERE CourseId='".$CourseId."'";
 				if ($conn->query($update) === TRUE) {
-					Header('Location:viewcourse.php?msg=success');
+                                    include ('session.php');
+                                    $conn->query("INSERT INTO tbllogs(userId, activity, time) VALUES ('$user_check','Course Edited $CourseId','".date("Y-m-d h:i:sa")."')");                                    
+                                    Header('Location:viewcourse.php?msg=success');
 				} else {
-					echo $conn->error; 
+                                    echo $conn->error; 
 				} 
 
 		$conn->close();   

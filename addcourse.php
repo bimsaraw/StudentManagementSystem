@@ -24,6 +24,8 @@ if (isset($_POST['submit'])) {
         if ($conn->query($insert) === TRUE) {
 			$_POST=array();
             $success = "Course added successfully!";
+                include ('session.php');
+                $conn->query("INSERT INTO tbllogs(userId, activity, time) VALUES ('$user_check','Course Added $CourseId','".date("Y-m-d h:i:sa")."')");            
         } else {
             $responseerror = $conn->error;
         }

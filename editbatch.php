@@ -23,7 +23,9 @@ if(isset($_GET['id'])) {
 			$update = "UPDATE batch SET name='$name', type='$type', CourseId='$course'
 				WHERE batchId='".$batchId."'";
 				if ($conn->query($update) === TRUE) {
-					Header('Location:viewbatch.php?msg=success');
+                                    include ('session.php');
+                                    $conn->query("INSERT INTO tbllogs(userId, activity, time) VALUES ('$user_check','Student Batch Edited $batchId','".date("Y-m-d h:i:sa")."')");
+                                    Header('Location:viewbatch.php?msg=success');
 					
 				} else {
 					echo $responseerror = $conn->error; 

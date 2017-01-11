@@ -37,7 +37,7 @@ $conn->close();
                 <div class="col-xs-12 col-md-9">
                     <div class="boxarea">
                         <div class="insideholder">
-                            <h2>View Students</h2>
+                            <h2>View Student Batches</h2>
                             <hr>
                             <?php if($msg == "success"){ ?>
                             <div class="alert alert-success">Batch updated/deleted successfully!</div>
