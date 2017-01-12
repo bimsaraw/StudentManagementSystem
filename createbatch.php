@@ -10,17 +10,13 @@ error_reporting(0);
 if (isset($_POST['submit'])) {
     $batchId = $_POST['batchId'];
     $name = $_POST['name'];
-	$type = $_POST['type'];
-	$course = $_POST['course'];
-	
-		$validatetype=$conn->query("SELECT CourseId, Type FROM course WHERE CourseId='".$course."'");
-		$validatetype=$validatetype->fetch_assoc();
-		
+    $type = $_POST['type'];
+    $course = $_POST['course'];
 		
     
-    $validateId = "SELECT batchId FROM batch WHERE CourseId='".$batchId."'";
-	$validatetype=$conn->query("SELECT CourseId, Type FROM course WHERE CourseId='".$course."'");
-	$validatetype=$validatetype->fetch_assoc();
+    $validateId = "SELECT batchId FROM batch WHERE batchId='".$batchId."'";
+    $validatetype=$conn->query("SELECT CourseId, Type FROM course WHERE CourseId='".$course."'");
+    $validatetype=$validatetype->fetch_assoc();
 	
    if($conn->query($validateId)->num_rows>0){
         $responseerror = "Course Id is not unique.";  

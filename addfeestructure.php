@@ -8,33 +8,31 @@ $success = "";
 error_reporting(0);
 
 if (isset($_POST['submit'])) {
-    $CourseId = $_POST['CourseId'];
-    $Name = $_POST['Name'];
-    $Duration = $_POST['Duration'];
-    $CourseType = $_POST['CourseType'];
-    $Type = $_POST['Type'];
+    $structId = $_POST['structId'];
+    $structName = $_POST['structName'];
+    $amount = $_POST['amount'];
+    $installments = $_POST['installments'];
     
-    $validateId = "SELECT CourseId FROM course WHERE CourseId='".$CourseId."'";
+    $validateId = "SELECT structId FROM fee_structure WHERE structId='".$structId."'";
+	
    if($conn->query($validateId)->num_rows>0){
-        $responseerror = "Course Id is not unique.";  
+        $responseerror = "Structure Id is not unique.";  
    }
    else {
-        $insert = "INSERT INTO Course (CourseId, courseName, Duration, CourseType, Type)
-            VALUES ('$CourseId','$Name','$Duration','$CourseType','$Type')";
+        $insert = "INSERT INTO fee_structure (structId, structName, amount, installments)
+            VALUES ('$structId','$structName', '$amount', '$installments')";
         if ($conn->query($insert) === TRUE) {
-            $_POST=array();
-            $success = "Course added successfully!";
+            $_POST = array();
+            $success = "Fee Structure added successfully!";
             include ('session.php');
-            $conn->query("INSERT INTO tbllogs(userId, activity, time) VALUES ('$user_check','Course Added $CourseId','".date("Y-m-d h:i:sa")."')");            
+            $conn->query("INSERT INTO tbllogs(userId, activity, time) VALUES ('$user_check','Fee Structure Added $structId','".date("Y-m-d h:i:sa")."')");
         } else {
             $responseerror = $conn->error;
         }
-    } 
-    $conn->close();   
+    }  
 }
-
-
 ?>
+
 <html lang="en">
     <head>
         <meta charset="utf-8">
@@ -61,7 +59,7 @@ if (isset($_POST['submit'])) {
                 <div class="col-xs-12 col-md-9">
                     <div class="boxarea">
                         <div class="insideholder">
-                            <h2>Add Course</h2>
+                            <h2>Add Fee Structure</h2>
                             <hr>
                             <?php if ($responseerror != "") { ?>
                             <div class="alert alert-warning alert-dismissible fade in">
@@ -75,47 +73,38 @@ if (isset($_POST['submit'])) {
                             <?php } ?>  
                             <form class="form-horizontal" method="post" action="">
                                 <div class="form-group">
-                                    <label class="control-label col-sm-2" for="CourseId">Course ID:</label>
+                                    <label class="control-label col-sm-2" for="structId">Fee Structure ID:</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="courseId" name="CourseId" value="<?php echo $_POST['CourseId']; ?>" placeholder="Enter an unique course Id" required>
+                                        <input type="text" class="form-control" id="structId" name="structId" value="<?php echo $_POST['structId']; ?>" placeholder="Enter an unique Structure Id" required>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label col-sm-2" for="Name">Course Name:</label>
+                                    <label class="control-label col-sm-2" for="structName">Fee Structure Name:</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="Name" name="Name" value="<?php echo $_POST['Name']; ?>" placeholder="Enter the course name" required>
+                                        <input type="text" class="form-control" id="structName" name="structName" value="<?php echo $_POST['structName']; ?>" placeholder="Enter the fee structure name" required>
                                     </div>
                                 </div>   
                                 <div class="form-group">
-                                    <label class="control-label col-sm-2" for="Duration">Duration:</label>
+                                    <label class="control-label col-sm-2" for="amount">Amount:</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="Duration" name="Duration" value="<?php echo $_POST['Duration']; ?>" placeholder="Enter the course duration as months" required>
+                                        <input type="text" class="form-control" id="amount" name="amount" value="<?php echo $_POST['amount']; ?>" placeholder="Enter the total fee amount" required>
                                     </div>
-                                </div>    
+                                </div>                                  
                                 <div class="form-group">
-                                    <label class="control-label col-sm-2" for="CourseType">Course Type:</label>
+                                    <label class="control-label col-sm-2" for="installments">Installments:</label>
                                     <div class="col-sm-10">
-                                        <select class="form-control" id="CourseType" name="CourseType">
-                                            <option value="<?php echo $_POST['CourseType']; ?>"><?php echo $_POST['CourseType']; ?></option>
-                                            <option value="Certificate">Certificate</option>
-                                            <option value="Diploma">Diploma</option>
-                                            <option value="Degree">Degree</option>
+                                        <select class="form-control" name="installments" required>
+                                                <option value="<?php echo $_POST['installments']; ?>"><?php echo $_POST['installments']; ?></option>
+                                                <option value="6">6</option>
+                                                <option value="9">9</option>
+                                                <option value="12">12</option>
+                                                <option value="24">24</option>                                                
                                         </select>
                                     </div>
-                                </div>  
-                                <div class="form-group">
-                                    <label class="control-label col-sm-2" for="Type">Type:</label>
-                                    <div class="col-sm-10">
-                                        <select class="form-control" id="Type" name="Type">
-                                            <option value="<?php echo $_POST['Type']; ?>"><?php echo $_POST['Type']; ?></option>
-                                            <option value="Part Time">Part Time</option>
-                                            <option value="Full Time">Full Time</option>
-                                        </select>
-                                    </div>
-                                </div>  
+                                </div> 							
                                 <div class="form-group"> 
                                     <div class="col-sm-offset-2 col-sm-10">
-                                        <button type="submit" name="submit" class="btn btn-success">Add Course</button>
+                                        <button type="submit" name="submit" class="btn btn-success">Add Fee Structure</button>
                                         <button type="reset" class="btn btn-danger">Discard</button>
                                     </div>
                                 </div>                                 

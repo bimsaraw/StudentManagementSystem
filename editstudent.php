@@ -9,8 +9,8 @@ require_once('class/upload.class.php');
     $success = "";
 
 if(isset($_GET['id'])) {
-	$studentId = $_GET['id'];    
-	if (isset($_POST['submit'])) {
+    $studentId = $_GET['id'];    
+    if (isset($_POST['submit'])) {
        $name = $_POST['name'];
        $nic = $_POST['nic'];
        $address = $_POST['address'];
