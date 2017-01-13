@@ -9,13 +9,14 @@ $validateId=$conn->query("SELECT COUNT(studentId) FROM student WHERE studentId='
 $enrollments=$conn->query("SELECT enroll.studentId, enroll.batchId, batch.name, enroll.structId FROM enroll INNER JOIN batch ON enroll.batchId=batch.batchId WHERE studentId='".$studentId."'");
 
 if(isset($_GET['submit'])){
-    echo $_GET['studentId'];
+    $studentId = $_GET['studentId'];
     $batchId=$_GET['sel_enrollment'];
     $date=date("Y-m-d h:i:sa");
     $installments=$_GET['payinginstallments'];
     $amount=$_GET['amount'];
     
-    $insert = "INSERT INTO payments('studentId','batchId','date','installments','amount') VALUES ('$studentId','$batchId','$date','$installments','$amount')";
+    $insert = "INSERT INTO payments (studentId, batchId, date, installments, amount)
+            VALUES ('$studentId','$batchId','$date','$installments','$amount')";
     
     if($conn->query($insert)===true){
         $msg = "error";
@@ -58,7 +59,7 @@ if(isset($_GET['submit'])){
                                 <div class="form-group">
                                     <label class="control-label col-sm-2" for="studentId">Student ID:</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="studentId" name="studentId" value="<?php echo $studentId; ?>" disabled>
+                                        <input type="text" class="form-control" id="studentId" name="studentId" value="<?php echo $studentId; ?>">
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -83,8 +84,8 @@ if(isset($_GET['submit'])){
                                 </div> 
                                 <div class="form-group">
                                     <label class="control-label col-sm-2">Amount:</label>
-                                    <div class="col-sm-10" id="amount">
-                                        <input type='text' class='form-control' id='amount' name='amount' value='' disabled>
+                                    <div class="col-sm-10">
+                                        <input type='text' class='form-control' id='amount' name='amount' value=''>
                                     </div>
                                 </div>                                
                                 <div class="form-group">
@@ -137,7 +138,7 @@ if(isset($_GET['submit'])){
                     url:'paymentData.php',
                     data:{studentId:studentId,bId:batchId,installments:installments},
                     success:function(html){
-                          $('#amount').value(html);
+                          $('#amount').val(html);
                     }
                 }); 
             }else{
